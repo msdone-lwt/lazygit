@@ -1,0 +1,113 @@
+customCommands:
+  - key: '<c-c>'
+    context: 'files'
+    prompts:
+      - type: 'menu'
+        title: 'What kind of commit is it?'
+        key: 'CommitType'
+        options:
+          - name: 'feat'
+            description: '新功能（feature）'
+            value: 'feat'
+          - name: 'fix'
+            description: '修补bug'
+            value: 'fix'
+          - name: 'docs'
+            description: '文档（documentation）'
+            value: 'docs'
+          - name: 'style'
+            description: '格式（不影响代码运行的变动）'
+            value: 'style'
+          - name: 'refactor'
+            description: '重构（即不是新增功能，也不是修改bug的代码变动）'
+            value: 'refactor'
+          - name: 'test'
+            description: '增加测试'
+            value: 'test'
+          - name: 'chore'
+            description: '构建过程或辅助工具的变动'
+            value: 'chore'
+      - type: 'menu'
+        title: 'What is the scope of the commit impact?'
+        key: 'CommitScope'
+        options:
+          - name: 'application'
+            description: '应用层'
+            value: 'application'
+          - name: 'framework'
+            description: '框架层'
+            value: 'framework'
+          - name: 'service'
+            description: '服务层'
+            value: 'service'
+          - name: 'kernel'
+            description: '内核层'
+            value: 'kernel'
+      - type: 'input'
+        title: 'What is the subject of this commit?'
+        key: 'CommitSubject'
+      - type: 'input'
+        title: 'What is the body of this commit?'
+        key: 'CommitBody'
+        initialValue: ''
+    command: "git commit -m '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}' -m '{{.Form.CommitBody}}'"
+    loadingText: 'In Submission'
+    description: 'customCommands: Standard submission'
+    stream: true
+    showOutput: true
+  - key: '<c-p>'
+    context: 'files'
+    prompts:
+      - type: 'input'
+        title: 'Gerrit banch name'
+        initialValue: "main"
+        key: 'GerritBanchName'
+    command: "git push -u origin HEAD:refs/for/{{.Form.GerritBanchName}}"
+    description: 'customCommands: Gerrit push'
+    stream: true
+    showOutput: true
+  - key : 'a'
+    description: 'Checkout a remote branch as FETCH_HEAD'
+    command: "git fetch {{.Form.Remote}} {{.Form.Branch}} && git checkout FETCH_HEAD"
+    context: 'remotes'
+    prompts:
+      - type: 'menuFromCommand'
+        title: 'Remote branch:'
+        key: 'Branch'
+        command: 'git branch  -r --list {{.SelectedRemote.Name }}/*'
+        filter: '.*{{.SelectedRemote.Name }}/(?P<branch>.*)'
+        valueFormat: '{{ .branch }}'
+        labelFormat: '{{ .branch | green }}'
+language: 'en'
+gui:
+  sidePanelWidth: 0.3333 # gives you more space to show things side-by-side
+  theme:
+    selectedLineBgColor:
+      - reverse
+    selectedRangeBgColor:
+      - reverse
+    activeBorderColor:
+      - blue
+      - reverse 
+    inactiveBorderColor:
+      - white
+    searchingActiveBorderColor:
+      - cyan
+      - reverse
+    cherryPickedCommitBgColor:
+      - cyan
+    cherryPickedCommitFgColor:
+      - blue
+    unstagedChangesColor:
+      - red
+    defaultFgColor:
+      - blue
+git:
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=format:'%C(auto)%h%d %Creset%ad %Cgreen%an%Creset - %s' {{branchName}} --"
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  commit:
+    signOff: true
+os:
+  open: 'start "" {{filename}}'

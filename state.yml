@@ -1,0 +1,50 @@
+lastupdatecheck: 0
+recentrepos:
+startuppopupversion: 5
+customcommandshistory:
+- git config user.name
+- git revert c5ecf767
+- git commit
+- cat > ./.gitignore
+- cat ./.gitignore
+- cd ../
+- 'echo '
+- '"echo echo hello,world, lll \> C:\Users\Administrator\.gitmessage"       '
+- echo echo hello,world, lllcbcb \> C:\Users\Administrator\.gitmessage
+- '"echo echo hello,world, lll > C:\Users\Administrator\.gitmessage"'
+- echo echo hello,world, lll /> C:\Users\Administrator\.gitmessage
+- echo echo hello,world, lll > C:\Users\Administrator\.gitmessage
+- echo "hello,world"  ^>  C:/Users/Administrator/.gitmessage
+- echo "hello,world" >  C:/Users/Administrator/.gitmessage
+- echo hello, world >  C:/Users/Administrator/.gitmessage
+- 'cd E:'
+- ls
+- git add ./.ideavimrc
+- git reflog
+- git log
+- git branch  -r --list
+- git status
+- 'git commit -m "fix: 删除 @a 注释"'
+- pwd
+- git log --color=always
+- alacritty --version
+- 'cat '
+- ""
+- echo "hello,world, lll" 0x3C C:/Users/Administrator/.gitmessage
+- echo echo "hello,world, lll" > C:/Users/Administrator/.gitmessage
+- echo echo hello,world, lll ^> C:\Users\Administrator\.gitmessage
+- echo hello,world,a lll ^> C:\Users\Administrator\.gitmessage
+- echo  "echo hello,world, lll" > C:\Users\Administrator\.gitmessage
+- echo echo hello,world, llcbcbcbcbl /> C:\Users\Administrator\.gitmessage
+- '"echo echo hello,world, lllcbcbcb > C:\Users\Administrator\.gitmessage"'
+- '`echo echo hello,world, lll \> C:\Users\Administrator\.gitmessage`'
+- echo aaa
+- echo "test" ./txt.txt
+- echo "文本内容" | tee ./.gitignore
+- cat > aa.txt
+- git revert a9a6e252
+- git commit -m "t"
+- printf "文本内容" > ./.gitignore
+- git revert 3cdb63aa
+hidecommandlog: false
+ignorewhitespaceindiffview: false
