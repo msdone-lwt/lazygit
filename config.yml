@@ -51,6 +51,7 @@ customCommands:
         key: 'CommitBody'
         initialValue: ''
     command: "git commit -m '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}' -m '{{.Form.CommitBody}}'"
+    command: "echo -e '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}\n\n{{.Form.CommitBody}}' > ~/.gitmessage"
     loadingText: 'In Submission'
     description: 'customCommands: Standard submission'
     stream: true
@@ -121,7 +122,7 @@ git:
   branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=format:'%C(auto)%h%d %Creset%ad %Cgreen%an%Creset - %s' {{branchName}} --"
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    useConfig: true
   commit:
     signOff: true
 os:
