@@ -66,6 +66,21 @@ customCommands:
     description: 'customCommands: Gerrit push'
     stream: true
     showOutput: true
+  - key: 'a'
+    context: 'localBranches'
+    prompts:
+      - type: 'input'
+        title: 'Type you name'
+        initialValue: "selfTransition"
+        key: 'UserName'
+      - type: 'input'
+        title: 'Type you email'
+        initialValue: "lwt6077@gmail.com"
+        key: 'UserEmail'
+    command: "git config user.name '{{.Form.UserName}}' && git config user.email '{{.Form.UserEmail}}'"
+    description: 'customCommands: Modify the local repository commit author information'
+    stream: true
+    showOutput: true
   - key : 'a'
     description: 'Checkout a remote branch as FETCH_HEAD'
     command: "git fetch {{.Form.Remote}} {{.Form.Branch}} && git checkout FETCH_HEAD"
