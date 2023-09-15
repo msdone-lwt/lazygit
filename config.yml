@@ -50,7 +50,7 @@ customCommands:
         title: 'What is the body of this commit?'
         key: 'CommitBody'
         initialValue: ''
-    command: "echo -e '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}\n\n{{.Form.CommitBody}}' > ~/.gitmessage"
+    command: "git commit -m '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}' -m '{{.Form.CommitBody}}'"
     loadingText: 'In Submission'
     description: 'customCommands: Standard submission'
     stream: true
