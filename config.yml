@@ -56,7 +56,7 @@ customCommands:     # 用 menuFromCommand 显示结果
         command: "git commit -m '{{.Form.CommitType}}({{.Form.CommitScope}}):{{.Form.CommitSubject}}' -m '{{.Form.CommitBody}}'"
         filter: '(?P<result>.*)'
         valueFormat: '{{ .result }}'
-        labelFormat: '{{ .result | green }}'
+        labelFormat: '{{ .result | red }}'
     command: ""
     loadingText: 'In Submission'
     description: 'customCommands: Standard submission'
@@ -74,7 +74,7 @@ customCommands:     # 用 menuFromCommand 显示结果
         command: "git push -u origin HEAD:refs/for/{{.Form.GerritBanchName}}"
         filter: '(?P<result>.*)'
         valueFormat: '{{ .result }}'
-        labelFormat: '{{ .result | green }}'
+        labelFormat: '{{ .result | red }}'
     command: ""
     description: 'customCommands: Gerrit push'
     stream: true
