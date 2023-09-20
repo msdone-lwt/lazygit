@@ -81,8 +81,19 @@ customCommands:
     description: 'customCommands: Modify the local repository commit author information'
     stream: true
     showOutput: true
+  - key: 'C'
+    command: "git rev-list --count {{.SelectedLocalBranch.Name }}"
+    description: 'customCommands: 查看本地分支的提交次数'
+    context: 'localBranches'
+    stream: true
+    showOutput: true
+  - key: 'C'
+    command: "git rev-list --count {{.SelectedRemote.Name }}"
+    description: 'customCommands: 查看远程仓库的提交次数'
+    context: 'remotes'
+    stream: true
+    showOutput: true
   - key : 'P'
-    description: 'Checkout a remote branch as FETCH_HEAD'
     command: "git {{.Form.OperationMode}} {{.SelectedRemote.Name }} {{.Form.Branch}}"
     description: 'customCommands: 多仓库(指定仓库pull/push)'
     context: 'remotes'
