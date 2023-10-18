@@ -100,7 +100,7 @@ customCommands:     # 用 menuFromCommand 显示结果
     stream: true
     prompts:
       - type: 'menuFromCommand'
-        title: '本机分支 {{.SelectedLocalBranch.Name }} 的提交次数为:'
+        title: '本地分支 {{.SelectedLocalBranch.Name }} 的提交次数为:'
         key: 'LocalBranchCommitCount'
         command: 'git rev-list --count {{.SelectedLocalBranch.Name }}'
         filter: '(?P<count>.*)'
@@ -114,9 +114,16 @@ customCommands:     # 用 menuFromCommand 显示结果
     stream: true
     prompts:
       - type: 'menuFromCommand'
-        title: '远程仓库 {{.SelectedRemote.Name }} 的提交次数为:'
+        title: '请选择远程仓库的分支'
+        key: 'Branch'
+        command: 'git branch  -r --list {{.SelectedRemote.Name }}/*'
+        filter: '.*{{.SelectedRemote.Name }}/(?P<branch>.*)'
+        valueFormat: '{{ .branch }}'
+        labelFormat: '{{ .branch | red }}'
+      - type: 'menuFromCommand'
+        title: '远程分支 {{.SelectedRemote.Name }}/{{.Form.Branch}} 的提交次数为:'
         key: 'RemotesCommitCount'
-        command: 'git rev-list --count {{.SelectedRemote.Name }}'
+        command: 'git rev-list --count {{.SelectedRemote.Name }}/{{.Form.Branch}}'
         filter: '(?P<count>.*)'
         valueFormat: '{{ .count }}'
         labelFormat: '{{ .count | red }}'
@@ -280,11 +287,19 @@ os:
     # stream: true
     # showOutput: true
   # - key: 'C'
-    # command: "git rev-list --count {{.SelectedRemote.Name }}"
+    # command: "git rev-list --count {{.SelectedRemote.Name }}/{{.Form.Branch}}"
     # description: 'customCommands: 查看远程仓库的提交次数'
     # context: 'remotes'
     # stream: true
     # showOutput: true
+    # prompts:
+      # - type: 'menuFromCommand'
+        # title: '请选择远程仓库的分支'
+        # key: 'Branch'
+        # command: 'git branch  -r --list {{.SelectedRemote.Name }}/*'
+        # filter: '.*{{.SelectedRemote.Name }}/(?P<branch>.*)'
+        # valueFormat: '{{ .branch }}'
+        # labelFormat: '{{ .branch | red }}'
   # - key : 'P'
     # command: "git {{.Form.OperationMode}} {{.SelectedRemote.Name }} {{.Form.Branch}}"
     # description: 'customCommands: 多仓库(指定仓库pull/push)'
