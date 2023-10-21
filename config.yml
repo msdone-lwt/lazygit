@@ -149,14 +149,14 @@ customCommands:     # 用 menuFromCommand 显示结果
         labelFormat: '{{ .branch | red }}'
   - key: 'C'
     command: ""
-    description: 'customCommands: 查看当前本地分支从指定标签到 HEAD 的提交次数'
+    description: 'customCommands: 查看当前本地分支从指定标签(这个标签也算一次提交)到 HEAD 的提交次数'
     context: 'tags'
     stream: true
     prompts:
       - type: 'menuFromCommand'
         title: '本地分支从 {{.SelectedTag.Name }} 到 HEAD 的提交次数为:'
         key: 'LocalBranchCommitCount'
-        command: 'git rev-list {{.SelectedTag.Name }}..HEAD --count'
+        command: 'git rev-list {{.SelectedTag.Name }}^..HEAD --count'
         filter: '(?P<tagCount>.*)'
         valueFormat: '{{ .tagCount }}'
         labelFormat: '{{ .tagCount | red }}'
