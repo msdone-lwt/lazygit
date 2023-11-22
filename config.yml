@@ -196,6 +196,7 @@ git:
     signOff: true
 os:
   open: 'start "" {{filename}}'
+notARepository: 'skip'
 # empty output
 # customCommands:
   # - key: '<c-c>'
