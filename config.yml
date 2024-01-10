@@ -1,3 +1,20 @@
+# -------------------------------- .gitconfig ----------------------------
+# [core]
+#     pager = delta
+
+# [interactive]
+#     diffFilter = delta --color-only
+
+# [delta]
+#     navigate = true    # use n and N to move between diff sections
+#     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+#     side-by-side = true
+
+# [merge]
+#     conflictstyle = diff3
+
+# [diff]
+#     colorMoved = default
 customCommands:     # 用 menuFromCommand 显示结果
   - key: '<c-c>'
     context: 'files'
@@ -160,12 +177,12 @@ customCommands:     # 用 menuFromCommand 显示结果
         filter: '(?P<tagCount>.*)'
         valueFormat: '{{ .tagCount }}'
         labelFormat: '{{ .tagCount | red }}'
-language: 'en'
 keybinding:
   universal:
     filteringMenu: '<c-f>'
 gui:
   sidePanelWidth: 0.3333 # gives you more space to show things side-by-side
+  language: 'zh-CN' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
   theme:
     selectedLineBgColor:
       - reverse
@@ -191,11 +208,11 @@ git:
   branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=format:'%C(auto)%h%d %Creset%ad %Cgreen%an%Creset - %s' {{branchName}} --"
   paging:
     colorArg: always
-    useConfig: true
+    pager: delta --dark --paging=never --inline-hint-style="syntax" --wrap-max-lines=100 --wrap-left-symbol="↩" --wrap-right-symbol="↩" --wrap-right-percent=85 --wrap-right-prefix-symbol="↪" 
   commit:
     signOff: true
 os:
-  open: 'start "" {{filename}}'
+  open: 'open "" {{filename}}'
 notARepository: 'skip'
 # empty output
 # customCommands:
