@@ -80,9 +80,27 @@ customCommands: # 用 menuFromCommand 显示结果
     output: log
 
   - key: "<c-p>"
+    # NOTE: 设置 git alias 命令
+    # git config --global alias.gerrit-push '!f() { \
+    #     if [ -z "$1" ]; then \
+    #         echo "Usage: git gerrit-push <remote>/<branch>"; \
+    #         return 1; \
+    #     fi; \
+    #     remote_branch_pair="$1"; \
+    #     remote="${remote_branch_pair%%/*}"; \
+    #     branch="${remote_branch_pair#*/}"; \
+    #     if [ "$remote" = "$branch" ] && ! echo "$remote_branch_pair" | grep -q "/"; then \
+    #         echo "Error: Argument must be in <remote>/<branch> format (e.g., origin/master)."; \
+    #         echo "If you meant to push to a branch on '\''origin'\'', use '\''origin/$branch'\''."; \
+    #         return 1; \
+    #     fi; \
+    #     echo "Pushing HEAD to $remote for branch $branch (refs/for/$branch)..."; \
+    #     git push -u "$remote" "HEAD:refs/for/$branch"; \
+    # }; f'
     context: "files"
     # origin/master
-    command: 'powershell -Command "$parts = ''{{.Form.Remote}}''.Split(''/''); git push -u $parts[0] (''HEAD:refs/for/'' + $parts[1])"'
+    # command: 'powershell -Command "$parts = ''{{.Form.Remote}}''.Split(''/''); git push -u $parts[0] (''HEAD:refs/for/'' + $parts[1])"' # windows platform
+    command: "git gerrit-push {{.Form.Remote}}"
     description: "customCommands: Gerrit push"
     prompts:
       - type: "input"
