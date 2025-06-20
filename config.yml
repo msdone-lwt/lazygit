@@ -100,7 +100,7 @@ customCommands: # 用 menuFromCommand 显示结果
     context: "files"
     # origin/master
     # command: 'powershell -Command "$parts = ''{{.Form.Remote}}''.Split(''/''); git push -u $parts[0] (''HEAD:refs/for/'' + $parts[1])"' # windows platform
-    command: "git gerrit-push {{.Form.Remote}}"
+    command: "git gerrit-push {{.Form.Remote}}" # all platform
     description: "customCommands: Gerrit push"
     prompts:
       - type: "input"
@@ -191,6 +191,76 @@ customCommands: # 用 menuFromCommand 显示结果
         valueFormat: "{{ .tagCount }}"
         labelFormat: "{{ .tagCount | red }}"
     output: log
+  - key: <end>
+    context: "files"
+    description: "customCommands: Feature Commit"
+    command: |
+      powershell -Command 'git commit -m "feat: to #{{.Form.FeatureID}} {{.Form.FeatureTitle}}" -m "{{.Form.Content}}`n{{.Form.Effection}}"'
+    prompts:
+      - type: "input"
+        title: "Feature ID"
+        key: "FeatureID"
+      - type: "input"
+        title: "Feature Title"
+        key: "FeatureTitle"
+      - type: "input"
+        title: "content"
+        key: "Content"
+        initialValue: "content: "
+      - type: "input"
+        title: "Effection (Impact)"
+        key: "Effection"
+        initialValue: "effection: "
+    loadingText: "Creating feature commit..."
+    output: popup
+  - key: <home>
+    context: "files"
+    description: "customCommands: Fix Bug Commit"
+    # command: "git commit -m \"fix: to #{{.Form.BugID}} {{.Form.BugTitle}}\" -m \"{{.Form.Rootcause}}\" -m \"{{.Form.Solution}}\" -m \"{{.Form.Effection}}\""
+    command: |
+      powershell -Command 'git commit -m "fix: to #{{.Form.BugID}} {{.Form.BugTitle}}" -m "{{.Form.Rootcause}}`n{{.Form.Solution}}`n{{.Form.Effection}}"'
+    prompts:
+      - type: "input"
+        title: "Bug ID"
+        key: "BugID"
+      - type: "input"
+        title: "Bug Title"
+        key: "BugTitle"
+      - type: "input"
+        title: "Root Cause"
+        key: "Rootcause"
+        initialValue: "rootcause: "
+      - type: "input"
+        title: "Solution"
+        key: "Solution"
+        initialValue: "solution: "
+      - type: "input"
+        title: "Effection (Impact)"
+        key: "Effection"
+        initialValue: "effection: "
+    loadingText: "Creating bug fix commit..."
+    output: popup
+  - key: "C"
+    context: "files"
+    description: "customCommands: Commit Type (feat/fix) - SendKeys"
+    command: 'powershell -Command "if (''{{.Form.CommitType}}'' -eq ''feat'') { (New-Object -ComObject WScript.Shell).SendKeys(''{END}'') } elseif (''{{.Form.CommitType}}'' -eq ''fix'') { (New-Object -ComObject WScript.Shell).SendKeys(''{HOME}'') }"' # NOTE: 模拟按键
+    prompts:
+      - type: "menu"
+        title: "What is the type of this commit?"
+        key: "CommitType"
+        options:
+          - name: "feat"
+            description: "New feature (feature)"
+            value: "feat"
+          - name: "fix"
+            description: "Bug fix"
+            value: "fix"
+    loadingText: "Processing commit type..."
+    output: log
+  - key: 'f'
+    command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
+    context: 'commitFiles'
+    description: 'Compare (difftool) with local copy'
 keybinding:
   universal:
     filteringMenu: "<c-f>"
